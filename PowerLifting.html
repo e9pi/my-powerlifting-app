@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برنامج تدريب القوة</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+        body {
+            font-family: 'Tajawal', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            max-width: 100%;
+            padding: 1rem;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+        .input-group label {
+            width: 100px;
+            font-weight: 700;
+        }
+        .input-group input {
+            flex-grow: 1;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db;
+            text-align: right;
+            margin-left: 0.5rem;
+            background-color: white;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .btn-save {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-save:hover {
+            background-color: #2563eb;
+        }
+        .btn-rpe {
+            background-color: #10b981;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-rpe:hover {
+            background-color: #059669;
+        }
+        .btn-gemini {
+            background-color: #f59e0b;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-gemini:hover {
+            background-color: #d97706;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border-left-color: #f59e0b;
+            animation: spin 1s ease infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .collapsible-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        .arrow-icon {
+            transition: transform 0.3s ease;
+        }
+        .arrow-icon.rotated {
+            transform: rotate(180deg);
+        }
+        .collapsible-content.hidden {
+            display: none;
+        }
+        .light body {
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .light .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .light .bg-gray-50 {
+            background-color: #f9fafb;
+        }
+        .light .bg-white {
+            background-color: #ffffff;
+        }
+        .light input {
+            background-color: white;
+            color: #1f2937;
+        }
+        .dark body {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        .dark .card {
+            background-color: #2d3748;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        .dark .bg-gray-50 {
+            background-color: #242a35;
+        }
+        .dark .bg-white {
+            background-color: #2d3748;
+        }
+        .dark input {
+            background-color: #1f2937;
+            color: #e2e8f0;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col items-center p-4">
+    <button id="theme-toggle" class="absolute top-4 right-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2.5a.5.5 0 01.5.5v1a.5.5 0 01-1 0v-1a.5.5 0 01.5-.5zM6.9 4.4a.5.5 0 01.354.146l.707.707a.5.5 0 01-.707.707L6.543 5.25a.5.5 0 01.147-.354zm10.2 0a.5.5 0 01.354.146l.707.707a.5.5 0 01-.707.707l-.707-.707a.5.5 0 01.354-.854zM20.5 12a.5.5 0 01-.5.5h-1a.5.5 0 010-1h1a.5.5 0 01.5.5zM17.4 17.4a.5.5 0 01-.354-.146l-.707-.707a.5.5 0 01.707-.707l.707.707a.5.5 0 01-.146.354zM3.5 12a.5.5 0 01-.5.5h-1a.5.5 0 010-1h1a.5.5 0 01.5.5zM6.6 17.4a.5.5 0 01-.354.146l-.707-.707a.5.5 0 01.707-.707l.707.707a.5.5 0 01-.146.354zM12 18.5a.5.5 0 01-.5.5v1a.5.5 0 011 0v-1a.5.5 0 01-.5-.5zM12 6a6 6 0 00-6 6a6 6 0 006 6v-1a5 5 0 01-5-5a5 5 0 015-5z"/>
+        </svg>
+    </button>
+    <div class="container max-w-lg mx-auto">
+        <h1 class="text-3xl font-bold text-center my-6">برنامج تدريب القوة</h1>
+        
+        <!-- Motivational Quote Section -->
+        <div id="quote-section" class="card text-center italic text-lg text-gray-700">
+            <div id="gemini-quote"></div>
+        </div>
+
+        <div id="pr-section" class="card">
+            <h2 class="text-xl font-bold mb-4">تخصيص أوزان الـPRs (الوزن الأقصى)</h2>
+            <div class="space-y-4">
+                <div class="input-group">
+                    <label for="pr-squat">سكوات (Squat):</label>
+                    <input type="number" id="pr-squat" placeholder="أدخل وزن PR" class="text-right">
+                </div>
+                <div class="input-group">
+                    <label for="pr-bench">بنش (Bench):</label>
+                    <input type="number" id="pr-bench" placeholder="أدخل وزن PR" class="text-right">
+                </div>
+                <div class="input-group">
+                    <label for="pr-deadlift">ديدليفت (Deadlift):</label>
+                    <input type="number" id="pr-deadlift" placeholder="أدخل وزن PR" class="text-right">
+                </div>
+            </div>
+            <button onclick="savePRs()" class="btn-save w-full mt-6">حفظ</button>
+        </div>
+
+        <div id="program-section"></div>
+    </div>
+
+    <script>
+        const programData = {
+            'WEEK 1': {
+                'DAY 1': [
+                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.72 },
+                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.68 },
+                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.65 },
+                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '1', pr_percent: 0.7 },
+                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.65 },
+                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.6 },
+                    { name: 'LEG PRESS', type: 'accessory', sets: '3', reps: '8' },
+                    { name: 'MACHINE SHOULDER PRESS', type: 'accessory', sets: '3', reps: '10' },
+                    { name: 'PULL UPS', type: 'accessory', sets: '3', reps: '8' },
+                    { name: 'CROSS CABLE TRICEP EXTENSION', type: 'accessory', sets: '3', reps: '12' }
+                ],
+                'DAY 2': [
+                    { name: 'TEMPO DEADLIFT', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.7 },
+                    { name: 'TEMPO DEADLIFT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.65 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.88 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.83 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '2', reps: '5', pr_percent: 0.8 },
+                    { name: 'SEATED ROW', type: 'accessory', sets: '3', reps: '10' },
+                    { name: 'LEG EXTENSION', type: 'accessory', sets: '3', reps: '10' },
+                    { name: 'CABLE BICEP CURL', type: 'accessory', sets: '3', reps: '10' }
+                ],
+                'DAY 3': [
+                    { name: 'FRONT SQUAT', type: 'SBD', sets: '1', reps: '3', pr_percent: 0.65 },
+                    { name: 'FRONT SQUAT', type: 'SBD', sets: '1', reps: '5', pr_percent: 0.6 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.88 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.83 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '2', reps: '5', pr_percent: 0.8 },
+                    { name: 'SINGLE ARM DUMBBELL ROW', type: 'accessory', sets: '3', reps: '8' },
+                    { name: 'MACHINE CHEST PRESS', type: 'accessory', sets: '3', reps: '10' },
+                    { name: 'MACHINE LEG CURL', type: 'accessory', sets: '3', reps: '8' },
+                    { name: 'BARBELL BICEP CURL', type: 'accessory', sets: '3', reps: '10' }
+                ]
+            },
+            'WEEK 2': {
+                'DAY 1': [
+                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.78 },
+                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.73 },
+                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.7 },
+                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '1', pr_percent: 0.75 },
+                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.7 },
+                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.65 },
+                    { name: 'LEG PRESS', type: 'accessory', sets: '3', reps: '8' },
+                    { name: 'MACHINE SHOULDER PRESS', type: 'accessory', sets: '3', reps: '10' },
+                    { name: 'PULL UPS', type: 'accessory', sets: '3', reps: '8' },
+                    { name: 'CROSS CABLE TRICEP EXTENSION', type: 'accessory', sets: '3', reps: '12' }
+                ],
+                'DAY 2': [
+                    { name: 'TEMPO DEADLIFT', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.75 },
+                    { name: 'TEMPO DEADLIFT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.7 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.65 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.65 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '2', reps: '5', pr_percent: 0.65 },
+                    { name: 'SEATED ROW', type: 'accessory', sets: '3', reps: '10' },
+                    { name: 'LEG EXTENSION', type: 'accessory', sets: '3', reps: '10' },
+                    { name: 'CABLE BICEP CURL', type: 'accessory', sets: '3', reps: '10' }
+                ],
+                'DAY 3': [
+                    { name: 'FRONT SQUAT', type: 'SBD', sets: '1', reps: '3', pr_percent: 0.7 },
+                    { name: 'FRONT SQUAT', type: 'SBD', sets: '1', reps: '5', pr_percent: 0.65 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.65 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.65 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '2', reps: '5', pr_percent: 0.65 },
+                    { name: 'SINGLE ARM DUMBBELL ROW', type: 'accessory', sets: '3', reps: '8' },
+                    { name: 'MACHINE CHEST PRESS', type: 'accessory', sets: '3', reps: '10' },
+                    { name: 'MACHINE LEG CURL', type: 'accessory', sets: '3', reps: '8' },
+                    { name: 'BARBELL BICEP CURL', type: 'accessory', sets: '3', reps: '10' }
+                ]
+            },
+            'WEEK 3': {
+                'DAY 1': [
+                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.85 },
+                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.8 },
+                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.77 },
+                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '1', pr_percent: 0.8 },
+                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.75 },
+                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.7 },
+                    { name: 'LEG PRESS', type: 'accessory', sets: '3', reps: '8' },
+                    { name: 'MACHINE SHOULDER PRESS', type: 'accessory', sets: '3', reps: '10' },
+                    { name: 'PULL UPS', type: 'accessory', sets: '3', reps: '8' },
+                    { name: 'CROSS CABLE TRICEP EXTENSION', type: 'accessory', sets: '3', reps: '12' }
+                ],
+                'DAY 2': [
+                    { name: 'TEMPO DEADLIFT', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.8 },
+                    { name: 'TEMPO DEADLIFT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.75 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.88 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.83 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '2', reps: '5', pr_percent: 0.8 },
+                    { name: 'SEATED ROW', type: 'accessory', sets: '3', reps: '10' },
+                    { name: 'LEG EXTENSION', type: 'accessory', sets: '3', 'reps': '10' },
+                    { name: 'CABLE BICEP CURL', type: 'accessory', sets: '3', reps: '10' }
+                ],
+                'DAY 3': [
+                    { name: 'FRONT SQUAT', type: 'SBD', sets: '1', reps: '3', pr_percent: 0.75 },
+                    { name: 'FRONT SQUAT', type: 'SBD', sets: '1', reps: '5', pr_percent: 0.7 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.88 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.83 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '2', reps: '5', pr_percent: 0.8 },
+                    { name: 'SINGLE ARM DUMBBELL ROW', type: 'accessory', sets: '3', reps: '8' },
+                    { name: 'MACHINE CHEST PRESS', type: 'accessory', sets: '3', reps: '10' },
+                    { name: 'MACHINE LEG CURL', type: 'accessory', sets: '3', reps: '8' },
+                    { name: 'BARBELL BICEP CURL', type: 'accessory', sets: '3', reps: '10' }
+                ]
+            },
+            'WEEK 4': {
+                'DAY 1': [
+                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '1', pr_percent: 0.9 },
+                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '1', pr_percent: 0.85 },
+                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.8 },
+                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.75 },
+                    { name: 'LEG PRESS', type: 'accessory', sets: '3', reps: '8' },
+                    { name: 'MACHINE SHOULDER PRESS', type: 'accessory', sets: '3', reps: '10' },
+                    { name: 'PULL UPS', type: 'accessory', sets: '3', reps: '8' },
+                    { name: 'CROSS CABLE TRICEP EXTENSION', type: 'accessory', sets: '3', reps: '12' }
+                ],
+                'DAY 2': [
+                    { name: 'TEMPO DEADLIFT', type: 'SBD', sets: '1', reps: '1', pr_percent: 0.85 },
+                    { name: 'TEMPO DEADLIFT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.8 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.65 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.65 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '2', reps: '5', pr_percent: 0.65 },
+                    { name: 'SEATED ROW', type: 'accessory', sets: '3', reps: '10' },
+                    { name: 'LEG EXTENSION', type: 'accessory', sets: '3', reps: '10' },
+                    { name: 'CABLE BICEP CURL', type: 'accessory', sets: '3', reps: '10' }
+                ],
+                'DAY 3': [
+                    { name: 'FRONT SQUAT', type: 'SBD', sets: '1', reps: '3', pr_percent: 0.75 },
+                    { name: 'FRONT SQUAT', type: 'SBD', sets: '1', reps: '5', pr_percent: 0.7 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.88 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.83 },
+                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '2', reps: '5', pr_percent: 0.8 },
+                    { name: 'SINGLE ARM DUMBBELL ROW', type: 'accessory', sets: '3', reps: '8' },
+                    { name: 'MACHINE CHEST PRESS', type: 'accessory', sets: '3', reps: '10' },
+                    { name: 'MACHINE LEG CURL', type: 'accessory', sets: '3', reps: '8' },
+                    { name: 'BARBELL BICEP CURL', type: 'accessory', sets: '3', reps: '10' }
+                ]
+            }
+        };
+
+        function getPR(name) {
+            const prs = JSON.parse(localStorage.getItem('userPRs')) || {};
+            if (name.includes('SQUAT')) return prs.squat;
+            if (name.includes('BENCH')) return prs.bench;
+            if (name.includes('DEADLIFT')) return prs.deadlift;
+            return null;
+        }
+
+        async function analyzeRPE(dayData, dayId) {
+            const rpeValues = dayData.map(ex => {
+                const rpeInput = document.getElementById(`rpe-${ex.name.replace(/\s/g, '-')}`);
+                return rpeInput ? parseFloat(rpeInput.value) : null;
+            }).filter(val => val !== null && !isNaN(val));
+
+            if (rpeValues.length === 0) {
+                console.log('الرجاء إدخال قيم RPE لتحليلها.');
+                return;
+            }
+
+            const analysisDiv = document.getElementById(`rpe-analysis-result-${dayId}`);
+            analysisDiv.innerHTML = '<div class="loading-spinner mx-auto my-2"></div>';
+
+            const rpeSummary = rpeValues.join(', ');
+            const userPrompt = `
+                حلل قيم RPE التالية: [${rpeSummary}] لروتين تدريب القوة. قدم تقييمًا عامًا لمستوى الجهد المبذول في هذا اليوم التدريبي. هل كان خفيفًا، متوسطًا، أم شديدًا؟
+            `;
+            
+            const payload = {
+                contents: [{ parts: [{ text: userPrompt }] }],
+            };
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const result = await response.json();
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (text) {
+                    analysisDiv.innerHTML = `<p class="text-sm mt-2">${text}</p>`;
+                } else {
+                    analysisDiv.innerHTML = `<p class="text-sm mt-2 text-red-500">حدث خطأ في التحليل.</p>`;
+                }
+            } catch (error) {
+                console.error('Error fetching RPE analysis:', error);
+                analysisDiv.innerHTML = `<p class="text-sm mt-2 text-red-500">حدث خطأ: يرجى المحاولة مرة أخرى.</p>`;
+            }
+        }
+
+        async function getGeminiQuote() {
+            const quoteDiv = document.getElementById('gemini-quote');
+            quoteDiv.innerHTML = '<div class="loading-spinner mx-auto my-2"></div>';
+
+            const userPrompt = `
+                أنت مدرب رفع أثقال. أعطِ اقتباسًا قصيرًا وملهمًا عن القوة، المثابرة، أو الانضباط في التدريب. اجعله باللغة العربية.
+            `;
+            
+            const payload = {
+                contents: [{ parts: [{ text: userPrompt }] }],
+            };
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const result = await response.json();
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (text) {
+                    quoteDiv.innerHTML = `<p>${text}</p>`;
+                } else {
+                    quoteDiv.innerHTML = `<p>لا توجد اقتباسات حالياً. حاول مرة أخرى.</p>`;
+                }
+            } catch (error) {
+                console.error('Error fetching quote:', error);
+                quoteDiv.innerHTML = `<p>حدث خطأ في الحصول على الاقتباس.</p>`;
+            }
+        }
+        
+        function toggleWeek(weekId) {
+            const content = document.getElementById(weekId);
+            const arrow = document.getElementById(`arrow-${weekId}`);
+            content.classList.toggle('hidden');
+            arrow.classList.toggle('rotated');
+        }
+
+        function renderProgram() {
+            const programSection = document.getElementById('program-section');
+            programSection.innerHTML = '';
+            const prs = JSON.parse(localStorage.getItem('userPRs')) || {};
+            const accessoryProgress = JSON.parse(localStorage.getItem('accessoryProgress')) || {};
+
+            for (const week in programData) {
+                const weekId = `week-content-${week.replace(/\s/g, '-')}`;
+                const weekCard = document.createElement('div');
+                weekCard.className = 'card mt-6';
+                weekCard.innerHTML = `
+                    <div class="collapsible-header" onclick="toggleWeek('${weekId}')">
+                        <h2 class="text-2xl font-bold mb-0">${week}</h2>
+                        <svg id="arrow-${weekId}" class="arrow-icon w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                    <div id="${weekId}" class="collapsible-content ${week !== 'WEEK 1' ? 'hidden' : ''}"></div>
+                `;
+                
+                const weekContentDiv = weekCard.querySelector(`#${weekId}`);
+
+                for (const day in programData[week]) {
+                    const dayCard = document.createElement('div');
+                    dayCard.className = 'bg-gray-50 rounded-lg p-4 mb-4';
+                    dayCard.innerHTML = `<h3 class="text-xl font-bold mb-2">${day}</h3>`;
+                    
+                    programData[week][day].forEach((exercise) => {
+                        const exerciseDiv = document.createElement('div');
+                        exerciseDiv.className = 'flex flex-col md:flex-row justify-between items-center bg-white rounded-lg p-3 mb-2 shadow-sm';
+                        
+                        let weightDisplay = '';
+                        let repsDisplay = `${exercise.sets}×${exercise.reps}`;
+                        const exerciseNameId = exercise.name.replace(/\s/g, '-');
+
+                        if (exercise.type === 'SBD') {
+                            const prValue = getPR(exercise.name);
+                            if (prValue) {
+                                const calculatedWeight = (prValue * exercise.pr_percent).toFixed(2);
+                                weightDisplay = `الوزن: ${calculatedWeight} كجم`;
+                            } else {
+                                weightDisplay = `الوزن: -`;
+                            }
+                            repsDisplay = `${exercise.sets} مجموعة | ${exercise.reps} تكرار`;
+                        } else {
+                            const progKey = `${week}-${day}-${exercise.name}`;
+                            const progData = accessoryProgress[progKey] || {};
+                            weightDisplay = `
+                                <div class="flex items-center space-x-2 space-x-reverse mt-2 md:mt-0">
+                                    <label>الوزن:</label>
+                                    <input type="number" value="${progData.weight || ''}" onchange="updateAccessory('${progKey}', 'weight', this.value)" class="w-20 text-center border rounded-md">
+                                </div>
+                            `;
+                            repsDisplay = `
+                                <div class="flex items-center space-x-2 space-x-reverse mt-2 md:mt-0">
+                                    <label>المجموعات:</label>
+                                    <input type="number" value="${progData.sets || exercise.sets}" onchange="updateAccessory('${progKey}', 'sets', this.value)" class="w-12 text-center border rounded-md">
+                                    <span class="ml-2">×</span>
+                                    <label>التكرارات:</label>
+                                    <input type="number" value="${progData.reps || exercise.reps}" onchange="updateAccessory('${progKey}', 'reps', this.value)" class="w-12 text-center border rounded-md">
+                                </div>
+                            `;
+                        }
+
+                        const rpeInputHtml = `
+                            <div class="flex items-center space-x-2 space-x-reverse mt-2 md:mt-0">
+                                <label>RPE:</label>
+                                <input type="number" id="rpe-${exerciseNameId}" min="1" max="10" value="" class="w-12 text-center border rounded-md input-rpe">
+                            </div>
+                        `;
+                        
+                        exerciseDiv.innerHTML = `
+                            <div class="flex flex-col items-center md:items-start text-center md:text-right w-full">
+                                <span class="font-bold text-lg">${exercise.name}</span>
+                                <span class="text-gray-600 mt-1">${repsDisplay}</span>
+                                <span class="text-gray-600 mt-1">${weightDisplay}</span>
+                            </div>
+                            <div class="flex flex-col items-end w-full md:w-auto">
+                                ${rpeInputHtml}
+                            </div>
+                        `;
+                        dayCard.appendChild(exerciseDiv);
+                    });
+
+                    // Add RPE analysis button and result area for each day
+                    const dayId = `${week.replace(/\s/g, '-')}-${day.replace(/\s/g, '-')}`;
+                    const analysisContainer = document.createElement('div');
+                    analysisContainer.className = 'flex flex-col items-center mt-4';
+                    analysisContainer.innerHTML = `
+                        <button onclick="analyzeRPE(${JSON.stringify(programData[week][day])}, '${dayId}')" class="btn-gemini">
+                            تحليل RPE
+                        </button>
+                        <div id="rpe-analysis-result-${dayId}" class="text-center mt-2"></div>
+                    `;
+                    dayCard.appendChild(analysisContainer);
+                    weekContentDiv.appendChild(dayCard);
+                }
+                programSection.appendChild(weekCard);
+            }
+        }
+
+        function savePRs() {
+            const squatPR = document.getElementById('pr-squat').value;
+            const benchPR = document.getElementById('pr-bench').value;
+            const deadliftPR = document.getElementById('pr-deadlift').value;
+
+            if (squatPR || benchPR || deadliftPR) {
+                const prs = {
+                    squat: parseFloat(squatPR) || 0,
+                    bench: parseFloat(benchPR) || 0,
+                    deadlift: parseFloat(deadliftPR) || 0
+                };
+                localStorage.setItem('userPRs', JSON.stringify(prs));
+                console.log('تم حفظ الأوزان بنجاح!');
+                renderProgram();
+            } else {
+                console.log('الرجاء إدخال وزن واحد على الأقل.');
+            }
+        }
+
+        function updateAccessory(key, field, value) {
+            const progress = JSON.parse(localStorage.getItem('accessoryProgress')) || {};
+            if (!progress[key]) {
+                progress[key] = {};
+            }
+            progress[key][field] = value;
+            localStorage.setItem('accessoryProgress', JSON.stringify(progress));
+        }
+
+        // Load saved PRs on page load
+        function loadPRs() {
+            const prs = JSON.parse(localStorage.getItem('userPRs')) || {};
+            document.getElementById('pr-squat').value = prs.squat || '';
+            document.getElementById('pr-bench').value = prs.bench || '';
+            document.getElementById('pr-deadlift').value = prs.deadlift || '';
+        }
+
+        // Dark/Light Mode Toggle Functionality
+        const themeToggleBtn = document.getElementById('theme-toggle');
+
+        function setTheme(theme) {
+            document.documentElement.className = theme;
+            localStorage.setItem('theme', theme);
+            updateToggleButton(theme);
+        }
+
+        function updateToggleButton(theme) {
+            const isDarkMode = theme === 'dark';
+            const iconSvg = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    ${isDarkMode ? `
+                        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+                    ` : `
+                        <path d="M12 2.5a.5.5 0 01.5.5v1a.5.5 0 01-1 0v-1a.5.5 0 01.5-.5zM6.9 4.4a.5.5 0 01.354.146l.707.707a.5.5 0 01-.707.707L6.543 5.25a.5.5 0 01.147-.354zm10.2 0a.5.5 0 01.354.146l.707.707a.5.5 0 01-.707.707l-.707-.707a.5.5 0 01.354-.854zM20.5 12a.5.5 0 01-.5.5h-1a.5.5 0 010-1h1a.5.5 0 01.5.5zM17.4 17.4a.5.5 0 01-.354-.146l-.707-.707a.5.5 0 01.707-.707l.707.707a.5.5 0 01-.146.354zM3.5 12a.5.5 0 01-.5.5h-1a.5.5 0 010-1h1a.5.5 0 01.5.5zM6.6 17.4a.5.5 0 01-.354.146l-.707-.707a.5.5 0 01.707-.707l.707.707a.5.5 0 01-.146.354zM12 18.5a.5.5 0 01-.5.5v1a.5.5 0 011 0v-1a.5.5 0 01-.5-.5zM12 6a6 6 0 00-6 6a6 6 0 006 6v-1a5 5 0 01-5-5a5 5 0 015-5z"/>
+                    `}
+                </svg>
+            `;
+            themeToggleBtn.innerHTML = iconSvg;
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = localStorage.getItem('theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        });
+
+        // Initial setup
+        window.onload = function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            setTheme(savedTheme);
+            loadPRs();
+            renderProgram();
+            getGeminiQuote();
+            // Rotate the arrow for the first week to show it's open
+            const firstWeekArrow = document.getElementById('arrow-week-content-WEEK-1');
+            if (firstWeekArrow) {
+                firstWeekArrow.classList.add('rotated');
+            }
+
+            // Register Service Worker
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('sw.js')
+                        .then(registration => {
+                            console.log('Service Worker registered with scope:', registration.scope);
+                        })
+                        .catch(error => {
+                            console.log('Service Worker registration failed:', error);
+                        });
+                });
+            }
+        }
+    </script>
+</body>
+</html>
