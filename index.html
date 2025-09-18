@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>جدول رفعات القوة</title>
+    <link rel="manifest" href="manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
@@ -156,11 +157,6 @@
     <div class="container max-w-lg mx-auto">
         <h1 class="text-3xl font-bold text-center my-6">برنامج تدريب القوة</h1>
         
-        <!-- Motivational Quote Section -->
-        <div id="quote-section" class="card text-center italic text-lg text-gray-700">
-            <div id="gemini-quote"></div>
-        </div>
-
         <div id="pr-section" class="card">
             <h2 class="text-xl font-bold mb-4">تخصيص أوزان الـPRs (الوزن الأقصى)</h2>
             <div class="space-y-4">
@@ -177,7 +173,7 @@
                     <input type="number" id="pr-deadlift" placeholder="أدخل وزن PR" class="text-right">
                 </div>
             </div>
-            <button onclick="savePRs()" class="btn-save w-full mt-6">حفظ</button>
+            <button onclick="savePRs()" class="btn-save w-full mt-6">حفظ الأوزان الأساسية</button>
         </div>
 
         <div id="program-section"></div>
@@ -332,91 +328,6 @@
             if (name.includes('DEADLIFT')) return prs.deadlift;
             return null;
         }
-
-        async function analyzeRPE(dayData, dayId) {
-            const rpeValues = dayData.map(ex => {
-                const rpeInput = document.getElementById(`rpe-${ex.name.replace(/\s/g, '-')}`);
-                return rpeInput ? parseFloat(rpeInput.value) : null;
-            }).filter(val => val !== null && !isNaN(val));
-
-            if (rpeValues.length === 0) {
-                console.log('الرجاء إدخال قيم RPE لتحليلها.');
-                return;
-            }
-
-            const analysisDiv = document.getElementById(`rpe-analysis-result-${dayId}`);
-            analysisDiv.innerHTML = '<div class="loading-spinner mx-auto my-2"></div>';
-
-            const rpeSummary = rpeValues.join(', ');
-            const userPrompt = `
-                حلل قيم RPE التالية: [${rpeSummary}] لروتين تدريب القوة. قدم تقييمًا عامًا لمستوى الجهد المبذول في هذا اليوم التدريبي. هل كان خفيفًا، متوسطًا، أم شديدًا؟
-            `;
-            
-            const payload = {
-                contents: [{ parts: [{ text: userPrompt }] }],
-            };
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const result = await response.json();
-                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                if (text) {
-                    analysisDiv.innerHTML = `<p class="text-sm mt-2">${text}</p>`;
-                } else {
-                    analysisDiv.innerHTML = `<p class="text-sm mt-2 text-red-500">حدث خطأ في التحليل.</p>`;
-                }
-            } catch (error) {
-                console.error('Error fetching RPE analysis:', error);
-                analysisDiv.innerHTML = `<p class="text-sm mt-2 text-red-500">حدث خطأ: يرجى المحاولة مرة أخرى.</p>`;
-            }
-        }
-
-        async function getGeminiQuote() {
-            const quoteDiv = document.getElementById('gemini-quote');
-            quoteDiv.innerHTML = '<div class="loading-spinner mx-auto my-2"></div>';
-
-            const userPrompt = `
-                أنت مدرب رفع أثقال. أعطِ اقتباسًا قصيرًا وملهمًا عن القوة، المثابرة، أو الانضباط في التدريب. اجعله باللغة العربية.
-            `;
-            
-            const payload = {
-                contents: [{ parts: [{ text: userPrompt }] }],
-            };
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const result = await response.json();
-                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                if (text) {
-                    quoteDiv.innerHTML = `<p>${text}</p>`;
-                } else {
-                    quoteDiv.innerHTML = `<p>لا توجد اقتباسات حالياً. حاول مرة أخرى.</p>`;
-                }
-            } catch (error) {
-                console.error('Error fetching quote:', error);
-                quoteDiv.innerHTML = `<p>حدث خطأ في الحصول على الاقتباس.</p>`;
-            }
-        }
         
         function toggleWeek(weekId) {
             const content = document.getElementById(weekId);
@@ -430,6 +341,7 @@
             programSection.innerHTML = '';
             const prs = JSON.parse(localStorage.getItem('userPRs')) || {};
             const accessoryProgress = JSON.parse(localStorage.getItem('accessoryProgress')) || {};
+            const rpeProgress = JSON.parse(localStorage.getItem('rpeProgress')) || {};
 
             for (const week in programData) {
                 const weekId = `week-content-${week.replace(/\s/g, '-')}`;
@@ -452,13 +364,14 @@
                     dayCard.className = 'bg-gray-50 rounded-lg p-4 mb-4';
                     dayCard.innerHTML = `<h3 class="text-xl font-bold mb-2">${day}</h3>`;
                     
-                    programData[week][day].forEach((exercise) => {
+                    programData[week][day].forEach((exercise, index) => {
                         const exerciseDiv = document.createElement('div');
                         exerciseDiv.className = 'flex flex-col md:flex-row justify-between items-center bg-white rounded-lg p-3 mb-2 shadow-sm';
                         
                         let weightDisplay = '';
                         let repsDisplay = `${exercise.sets}×${exercise.reps}`;
-                        const exerciseNameId = exercise.name.replace(/\s/g, '-');
+                        const dayKey = `${week.replace(/\s/g, '-')}-${day.replace(/\s/g, '-')}`;
+                        const exerciseId = `${dayKey}-${exercise.name.replace(/\s/g, '-')}-${index}`;
 
                         if (exercise.type === 'SBD') {
                             const prValue = getPR(exercise.name);
@@ -470,21 +383,20 @@
                             }
                             repsDisplay = `${exercise.sets} مجموعة | ${exercise.reps} تكرار`;
                         } else {
-                            const progKey = `${week}-${day}-${exercise.name}`;
-                            const progData = accessoryProgress[progKey] || {};
+                             const progData = accessoryProgress[exerciseId] || {};
                             weightDisplay = `
                                 <div class="flex items-center space-x-2 space-x-reverse mt-2 md:mt-0">
                                     <label>الوزن:</label>
-                                    <input type="number" value="${progData.weight || ''}" onchange="updateAccessory('${progKey}', 'weight', this.value)" class="w-20 text-center border rounded-md">
+                                    <input type="number" id="weight-${exerciseId}" value="${progData.weight || ''}" class="w-20 text-center border rounded-md">
                                 </div>
                             `;
                             repsDisplay = `
                                 <div class="flex items-center space-x-2 space-x-reverse mt-2 md:mt-0">
                                     <label>المجموعات:</label>
-                                    <input type="number" value="${progData.sets || exercise.sets}" onchange="updateAccessory('${progKey}', 'sets', this.value)" class="w-12 text-center border rounded-md">
+                                    <input type="number" id="sets-${exerciseId}" value="${progData.sets || exercise.sets}" class="w-12 text-center border rounded-md">
                                     <span class="ml-2">×</span>
                                     <label>التكرارات:</label>
-                                    <input type="number" value="${progData.reps || exercise.reps}" onchange="updateAccessory('${progKey}', 'reps', this.value)" class="w-12 text-center border rounded-md">
+                                    <input type="number" id="reps-${exerciseId}" value="${progData.reps || exercise.reps}" class="w-12 text-center border rounded-md">
                                 </div>
                             `;
                         }
@@ -492,7 +404,7 @@
                         const rpeInputHtml = `
                             <div class="flex items-center space-x-2 space-x-reverse mt-2 md:mt-0">
                                 <label>RPE:</label>
-                                <input type="number" id="rpe-${exerciseNameId}" min="1" max="10" value="" class="w-12 text-center border rounded-md input-rpe">
+                                <input type="number" id="rpe-${exerciseId}" min="1" max="10" value="${rpeProgress[exerciseId] || ''}" class="w-12 text-center border rounded-md input-rpe">
                             </div>
                         `;
                         
@@ -509,21 +421,49 @@
                         dayCard.appendChild(exerciseDiv);
                     });
 
-                    // Add RPE analysis button and result area for each day
-                    const dayId = `${week.replace(/\s/g, '-')}-${day.replace(/\s/g, '-')}`;
-                    const analysisContainer = document.createElement('div');
-                    analysisContainer.className = 'flex flex-col items-center mt-4';
-                    analysisContainer.innerHTML = `
-                        <button onclick="analyzeRPE(${JSON.stringify(programData[week][day])}, '${dayId}')" class="btn-gemini">
-                            تحليل RPE
-                        </button>
-                        <div id="rpe-analysis-result-${dayId}" class="text-center mt-2"></div>
-                    `;
-                    dayCard.appendChild(analysisContainer);
+                    // Add Save Day button
+                    const dayKey = `${week.replace(/\s/g, '-')}-${day.replace(/\s/g, '-')}`;
+                    const saveButton = document.createElement('button');
+                    saveButton.className = 'btn-save w-full mt-4';
+                    saveButton.textContent = 'حفظ اليوم';
+                    saveButton.onclick = () => saveDay(dayCard, dayKey, programData[week][day]);
+                    dayCard.appendChild(saveButton);
+
                     weekContentDiv.appendChild(dayCard);
                 }
                 programSection.appendChild(weekCard);
             }
+        }
+        
+        function saveDay(dayCard, dayKey, exercises) {
+            const accessoryProgress = JSON.parse(localStorage.getItem('accessoryProgress')) || {};
+            const rpeProgress = JSON.parse(localStorage.getItem('rpeProgress')) || {};
+
+            exercises.forEach((exercise, index) => {
+                const exerciseId = `${dayKey}-${exercise.name.replace(/\s/g, '-')}-${index}`;
+                
+                const rpeInput = document.getElementById(`rpe-${exerciseId}`);
+                if (rpeInput && rpeInput.value) {
+                    rpeProgress[exerciseId] = rpeInput.value;
+                }
+
+                if (exercise.type !== 'SBD') {
+                    const weightInput = document.getElementById(`weight-${exerciseId}`);
+                    const setsInput = document.getElementById(`sets-${exerciseId}`);
+                    const repsInput = document.getElementById(`reps-${exerciseId}`);
+                    
+                    if (!accessoryProgress[exerciseId]) {
+                        accessoryProgress[exerciseId] = {};
+                    }
+                    if (weightInput) accessoryProgress[exerciseId].weight = weightInput.value;
+                    if (setsInput) accessoryProgress[exerciseId].sets = setsInput.value;
+                    if (repsInput) accessoryProgress[exerciseId].reps = repsInput.value;
+                }
+            });
+
+            localStorage.setItem('accessoryProgress', JSON.stringify(accessoryProgress));
+            localStorage.setItem('rpeProgress', JSON.stringify(rpeProgress));
+            console.log('تم حفظ بيانات اليوم بنجاح!');
         }
 
         function savePRs() {
@@ -538,20 +478,11 @@
                     deadlift: parseFloat(deadliftPR) || 0
                 };
                 localStorage.setItem('userPRs', JSON.stringify(prs));
-                console.log('تم حفظ الأوزان بنجاح!');
+                console.log('تم حفظ الأوزان الأساسية بنجاح!');
                 renderProgram();
             } else {
                 console.log('الرجاء إدخال وزن واحد على الأقل.');
             }
-        }
-
-        function updateAccessory(key, field, value) {
-            const progress = JSON.parse(localStorage.getItem('accessoryProgress')) || {};
-            if (!progress[key]) {
-                progress[key] = {};
-            }
-            progress[key][field] = value;
-            localStorage.setItem('accessoryProgress', JSON.stringify(progress));
         }
 
         // Load saved PRs on page load
@@ -597,7 +528,6 @@
             setTheme(savedTheme);
             loadPRs();
             renderProgram();
-            getGeminiQuote();
             // Rotate the arrow for the first week to show it's open
             const firstWeekArrow = document.getElementById('arrow-week-content-WEEK-1');
             if (firstWeekArrow) {
@@ -620,4 +550,3 @@
     </script>
 </body>
 </html>
-
