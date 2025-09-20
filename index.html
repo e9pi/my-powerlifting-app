@@ -181,146 +181,195 @@
 
     <script>
         const programData = {
-            'WEEK 1': {
-                'DAY 1': [
-                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.72 },
-                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.68 },
-                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.65 },
-                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '1', pr_percent: 0.7 },
-                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.65 },
-                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.6 },
-                    { name: 'LEG PRESS', type: 'accessory', sets: '3', reps: '8' },
-                    { name: 'MACHINE SHOULDER PRESS', type: 'accessory', sets: '3', reps: '10' },
-                    { name: 'PULL UPS', type: 'accessory', sets: '3', reps: '8' },
-                    { name: 'CROSS CABLE TRICEP EXTENSION', type: 'accessory', sets: '3', reps: '12' }
-                ],
-                'DAY 2': [
-                    { name: 'TEMPO DEADLIFT', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.7 },
-                    { name: 'TEMPO DEADLIFT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.65 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.88 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.83 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '2', reps: '5', pr_percent: 0.8 },
-                    { name: 'SEATED ROW', type: 'accessory', sets: '3', reps: '10' },
-                    { name: 'LEG EXTENSION', type: 'accessory', sets: '3', reps: '10' },
-                    { name: 'CABLE BICEP CURL', type: 'accessory', sets: '3', reps: '10' }
-                ],
-                'DAY 3': [
-                    { name: 'FRONT SQUAT', type: 'SBD', sets: '1', reps: '3', pr_percent: 0.65 },
-                    { name: 'FRONT SQUAT', type: 'SBD', sets: '1', reps: '5', pr_percent: 0.6 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.88 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.83 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '2', reps: '5', pr_percent: 0.8 },
-                    { name: 'SINGLE ARM DUMBBELL ROW', type: 'accessory', sets: '3', reps: '8' },
-                    { name: 'MACHINE CHEST PRESS', type: 'accessory', sets: '3', reps: '10' },
-                    { name: 'MACHINE LEG CURL', type: 'accessory', sets: '3', reps: '8' },
-                    { name: 'BARBELL BICEP CURL', type: 'accessory', sets: '3', reps: '10' }
-                ]
-            },
-            'WEEK 2': {
-                'DAY 1': [
-                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.78 },
-                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.73 },
-                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.7 },
-                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '1', pr_percent: 0.75 },
-                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.7 },
-                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.65 },
-                    { name: 'LEG PRESS', type: 'accessory', sets: '3', reps: '8' },
-                    { name: 'MACHINE SHOULDER PRESS', type: 'accessory', sets: '3', reps: '10' },
-                    { name: 'PULL UPS', type: 'accessory', sets: '3', reps: '8' },
-                    { name: 'CROSS CABLE TRICEP EXTENSION', type: 'accessory', sets: '3', reps: '12' }
-                ],
-                'DAY 2': [
-                    { name: 'TEMPO DEADLIFT', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.75 },
-                    { name: 'TEMPO DEADLIFT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.7 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.65 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.65 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '2', reps: '5', pr_percent: 0.65 },
-                    { name: 'SEATED ROW', type: 'accessory', sets: '3', reps: '10' },
-                    { name: 'LEG EXTENSION', type: 'accessory', sets: '3', reps: '10' },
-                    { name: 'CABLE BICEP CURL', type: 'accessory', sets: '3', reps: '10' }
-                ],
-                'DAY 3': [
-                    { name: 'FRONT SQUAT', type: 'SBD', sets: '1', reps: '3', pr_percent: 0.7 },
-                    { name: 'FRONT SQUAT', type: 'SBD', sets: '1', reps: '5', pr_percent: 0.65 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.65 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.65 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '2', reps: '5', pr_percent: 0.65 },
-                    { name: 'SINGLE ARM DUMBBELL ROW', type: 'accessory', sets: '3', reps: '8' },
-                    { name: 'MACHINE CHEST PRESS', type: 'accessory', sets: '3', reps: '10' },
-                    { name: 'MACHINE LEG CURL', type: 'accessory', sets: '3', reps: '8' },
-                    { name: 'BARBELL BICEP CURL', type: 'accessory', sets: '3', reps: '10' }
-                ]
-            },
-            'WEEK 3': {
-                'DAY 1': [
-                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.85 },
-                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.8 },
-                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.77 },
-                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '1', pr_percent: 0.8 },
-                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.75 },
-                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.7 },
-                    { name: 'LEG PRESS', type: 'accessory', sets: '3', reps: '8' },
-                    { name: 'MACHINE SHOULDER PRESS', type: 'accessory', sets: '3', reps: '10' },
-                    { name: 'PULL UPS', type: 'accessory', sets: '3', reps: '8' },
-                    { name: 'CROSS CABLE TRICEP EXTENSION', type: 'accessory', sets: '3', reps: '12' }
-                ],
-                'DAY 2': [
-                    { name: 'TEMPO DEADLIFT', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.8 },
-                    { name: 'TEMPO DEADLIFT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.75 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.88 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.83 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '2', reps: '5', pr_percent: 0.8 },
-                    { name: 'SEATED ROW', type: 'accessory', sets: '3', reps: '10' },
-                    { name: 'LEG EXTENSION', type: 'accessory', sets: '3', 'reps': '10' },
-                    { name: 'CABLE BICEP CURL', type: 'accessory', sets: '3', reps: '10' }
-                ],
-                'DAY 3': [
-                    { name: 'FRONT SQUAT', type: 'SBD', sets: '1', reps: '3', pr_percent: 0.75 },
-                    { name: 'FRONT SQUAT', type: 'SBD', sets: '1', reps: '5', pr_percent: 0.7 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.88 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.83 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '2', reps: '5', pr_percent: 0.8 },
-                    { name: 'SINGLE ARM DUMBBELL ROW', type: 'accessory', sets: '3', reps: '8' },
-                    { name: 'MACHINE CHEST PRESS', type: 'accessory', sets: '3', reps: '10' },
-                    { name: 'MACHINE LEG CURL', type: 'accessory', sets: '3', reps: '8' },
-                    { name: 'BARBELL BICEP CURL', type: 'accessory', sets: '3', reps: '10' }
-                ]
-            },
-            'WEEK 4': {
-                'DAY 1': [
-                    { name: 'COMP SQUAT', type: 'SBD', sets: '1', reps: '1', pr_percent: 0.9 },
-                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '1', pr_percent: 0.85 },
-                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.8 },
-                    { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.75 },
-                    { name: 'LEG PRESS', type: 'accessory', sets: '3', reps: '8' },
-                    { name: 'MACHINE SHOULDER PRESS', type: 'accessory', sets: '3', reps: '10' },
-                    { name: 'PULL UPS', type: 'accessory', sets: '3', reps: '8' },
-                    { name: 'CROSS CABLE TRICEP EXTENSION', type: 'accessory', sets: '3', reps: '12' }
-                ],
-                'DAY 2': [
-                    { name: 'TEMPO DEADLIFT', type: 'SBD', sets: '1', reps: '1', pr_percent: 0.85 },
-                    { name: 'TEMPO DEADLIFT', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.8 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.65 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.65 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '2', reps: '5', pr_percent: 0.65 },
-                    { name: 'SEATED ROW', type: 'accessory', sets: '3', reps: '10' },
-                    { name: 'LEG EXTENSION', type: 'accessory', sets: '3', reps: '10' },
-                    { name: 'CABLE BICEP CURL', type: 'accessory', sets: '3', reps: '10' }
-                ],
-                'DAY 3': [
-                    { name: 'FRONT SQUAT', type: 'SBD', sets: '1', reps: '3', pr_percent: 0.75 },
-                    { name: 'FRONT SQUAT', type: 'SBD', sets: '1', reps: '5', pr_percent: 0.7 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '2', pr_percent: 0.88 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '1', reps: '4', pr_percent: 0.83 },
-                    { name: 'COMP BENCH PRESS', type: 'SBD', sets: '2', reps: '5', pr_percent: 0.8 },
-                    { name: 'SINGLE ARM DUMBBELL ROW', type: 'accessory', sets: '3', reps: '8' },
-                    { name: 'MACHINE CHEST PRESS', type: 'accessory', sets: '3', reps: '10' },
-                    { name: 'MACHINE LEG CURL', type: 'accessory', sets: '3', reps: '8' },
-                    { name: 'BARBELL BICEP CURL', type: 'accessory', sets: '3', reps: '10' }
-                ]
-            }
-        };
-
+  'WEEK 1': {
+    'DAY 1': [
+      { name: 'COMP SQUAT', type: 'SBD', sets: 1, reps: 2, pr_percent: 0.72 },
+      { name: 'COMP SQUAT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.68 },
+      { name: 'COMP SQUAT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.65 },
+      { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: 1, reps: 1, pr_percent: 0.70 },
+      { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: 1, reps: 3, pr_percent: 0.65 },
+      { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: 2, reps: 3, pr_percent: 0.62 },
+      { name: 'FLAT DB PRESS', type: 'accessory', sets: 3, reps: 8 },
+      { name: 'SINGLE CABLE TRICEP EXTENSION', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'SHOULDER FLIES', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'PLANK', type: 'accessory', sets: 2, reps: 60, unit: 's' }
+    ],
+    'DAY 2': [
+      { name: 'COMP DEADLIFT', type: 'SBD', sets: 1, reps: 3, pr_percent: 0.72 },
+      { name: 'COMP DEADLIFT', type: 'SBD', sets: 1, reps: 3, pr_percent: 0.72 },
+      { name: 'COMP DEADLIFT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.68 },
+      { name: 'LERSEN BENCH PRESS', type: 'SBD', sets: 1, reps: 5, pr_percent: 0.70 },
+      { name: 'LERSEN BENCH PRESS', type: 'SBD', sets: 2, reps: 5, pr_percent: 0.66 },
+      { name: '45 DEGREES', type: 'accessory', sets: 3, reps: 8 },
+      { name: 'SEATED CABLE ROW', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'LAT PULL DOWN', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'DB BICEP CURL', type: 'accessory', sets: 3, reps: 10 }
+    ],
+    'DAY 3': [
+      { name: 'TEMPO SQUAT', type: 'SBD', sets: 1, reps: 3, pr_percent: 0.68 },
+      { name: 'TEMPO SQUAT', type: 'SBD', sets: 2, reps: 4, pr_percent: 0.65 },
+      { name: 'COMP BENCH PRESS', type: 'SBD', sets: 1, reps: 2, pr_percent: 0.72 },
+      { name: 'COMP BENCH PRESS', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.68 },
+      { name: 'COMP BENCH PRESS', type: 'SBD', sets: 2, reps: 5, pr_percent: 0.65 },
+      { name: 'LEG PRESS', type: 'accessory', sets: 3, reps: 8 },
+      { name: 'MACHINE SHOULDER PRESS', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'PULL UPS', type: 'accessory', sets: 3, reps: 8 },
+      { name: 'CROSS CABLE TRICEP EXTENSION', type: 'accessory', sets: 3, reps: 12 }
+    ],
+    'DAY 4': [
+      { name: '3sec PAUSED DEADLIFT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.68 },
+      { name: '3sec PAUSED DEADLIFT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.65 },
+      { name: 'CLOSE GRIP BENCH PRESS', type: 'SBD', sets: 1, reps: 6, pr_percent: 0.70 },
+      { name: 'CLOSE GRIP BENCH PRESS', type: 'SBD', sets: 2, reps: 6, pr_percent: 0.66 },
+      { name: 'WEIGHTED DIPS', type: 'accessory', sets: 1, reps: 7 },
+      { name: 'WEIGHTED DIPS', type: 'accessory', sets: 2, reps: 7 },
+      { name: 'SEATED LEG CURL', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'INCLINE DB PRESS', type: 'accessory', sets: 3, reps: 6 },
+      { name: 'DB BICEP CURL', type: 'accessory', sets: 3, reps: 10 }
+    ]
+  },
+  'WEEK 2': {
+    'DAY 1': [
+      { name: 'COMP SQUAT', type: 'SBD', sets: 1, reps: 2, pr_percent: 0.78 },
+      { name: 'COMP SQUAT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.73 },
+      { name: 'COMP SQUAT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.70 },
+      { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: 1, reps: 1, pr_percent: 0.75 },
+      { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: 1, reps: 3, pr_percent: 0.70 },
+      { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: 2, reps: 3, pr_percent: 0.67 },
+      { name: 'FLAT DB PRESS', type: 'accessory', sets: 3, reps: 8 },
+      { name: 'SINGLE CABLE TRICEP EXTENSION', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'SHOULDER FLIES', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'PLANK', type: 'accessory', sets: 2, reps: 60, unit: 's' }
+    ],
+    'DAY 2': [
+      { name: 'COMP DEADLIFT', type: 'SBD', sets: 1, reps: 3, pr_percent: 0.78 },
+      { name: 'COMP DEADLIFT', type: 'SBD', sets: 1, reps: 3, pr_percent: 0.73 },
+      { name: 'COMP DEADLIFT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.72 },
+      { name: 'LERSEN BENCH PRESS', type: 'SBD', sets: 1, reps: 5, pr_percent: 0.75 },
+      { name: 'LERSEN BENCH PRESS', type: 'SBD', sets: 2, reps: 5, pr_percent: 0.70 },
+      { name: '45 DEGREES', type: 'accessory', sets: 3, reps: 8 },
+      { name: 'SEATED CABLE ROW', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'LAT PULL DOWN', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'DB BICEP CURL', type: 'accessory', sets: 3, reps: 10 }
+    ],
+    'DAY 3': [
+      { name: 'TEMPO SQUAT', type: 'SBD', sets: 1, reps: 3, pr_percent: 0.73 },
+      { name: 'TEMPO SQUAT', type: 'SBD', sets: 2, reps: 4, pr_percent: 0.70 },
+      { name: 'COMP BENCH PRESS', type: 'SBD', sets: 1, reps: 2, pr_percent: 0.78 },
+      { name: 'COMP BENCH PRESS', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.73 },
+      { name: 'COMP BENCH PRESS', type: 'SBD', sets: 2, reps: 5, pr_percent: 0.70 },
+      { name: 'LEG PRESS', type: 'accessory', sets: 3, reps: 8 },
+      { name: 'MACHINE SHOULDER PRESS', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'PULL UPS', type: 'accessory', sets: 3, reps: 8 },
+      { name: 'CROSS CABLE TRICEP EXTENSION', type: 'accessory', sets: 3, reps: 12 }
+    ],
+    'DAY 4': [
+      { name: '3sec PAUSED DEADLIFT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.73 },
+      { name: '3sec PAUSED DEADLIFT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.70 },
+      { name: 'CLOSE GRIP BENCH PRESS', type: 'SBD', sets: 1, reps: 6, pr_percent: 0.75 },
+      { name: 'CLOSE GRIP BENCH PRESS', type: 'SBD', sets: 2, reps: 6, pr_percent: 0.70 },
+      { name: 'WEIGHTED DIPS', type: 'accessory', sets: 1, reps: 7 },
+      { name: 'WEIGHTED DIPS', type: 'accessory', sets: 2, reps: 7 },
+      { name: 'SEATED LEG CURL', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'INCLINE DB PRESS', type: 'accessory', sets: 3, reps: 6 },
+      { name: 'DB BICEP CURL', type: 'accessory', sets: 3, reps: 10 }
+    ]
+  },
+  'WEEK 3': {
+    'DAY 1': [
+      { name: 'COMP SQUAT', type: 'SBD', sets: 1, reps: 2, pr_percent: 0.85 },
+      { name: 'COMP SQUAT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.80 },
+      { name: 'COMP SQUAT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.77 },
+      { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: 1, reps: 1, pr_percent: 0.83 },
+      { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: 1, reps: 3, pr_percent: 0.78 },
+      { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: 2, reps: 3, pr_percent: 0.76 },
+      { name: 'FLAT DB PRESS', type: 'accessory', sets: 3, reps: 8 },
+      { name: 'SINGLE CABLE TRICEP EXTENSION', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'SHOULDER FLIES', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'PLANK', type: 'accessory', sets: 2, reps: 60, unit: 's' }
+    ],
+    'DAY 2': [
+      { name: 'COMP DEADLIFT', type: 'SBD', sets: 1, reps: 3, pr_percent: 0.85 },
+      { name: 'COMP DEADLIFT', type: 'SBD', sets: 1, reps: 3, pr_percent: 0.80 },
+      { name: 'COMP DEADLIFT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.77 },
+      { name: 'LERSEN BENCH PRESS', type: 'SBD', sets: 1, reps: 5, pr_percent: 0.83 },
+      { name: 'LERSEN BENCH PRESS', type: 'SBD', sets: 2, reps: 5, pr_percent: 0.77 },
+      { name: '45 DEGREES', type: 'accessory', sets: 3, reps: 8 },
+      { name: 'SEATED CABLE ROW', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'LAT PULL DOWN', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'DB BICEP CURL', type: 'accessory', sets: 3, reps: 10 }
+    ],
+    'DAY 3': [
+      { name: 'TEMPO SQUAT', type: 'SBD', sets: 1, reps: 3, pr_percent: 0.80 },
+      { name: 'TEMPO SQUAT', type: 'SBD', sets: 2, reps: 4, pr_percent: 0.77 },
+      { name: 'COMP BENCH PRESS', type: 'SBD', sets: 1, reps: 2, pr_percent: 0.85 },
+      { name: 'COMP BENCH PRESS', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.80 },
+      { name: 'COMP BENCH PRESS', type: 'SBD', sets: 2, reps: 5, pr_percent: 0.77 },
+      { name: 'LEG PRESS', type: 'accessory', sets: 3, reps: 8 },
+      { name: 'MACHINE SHOULDER PRESS', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'PULL UPS', type: 'accessory', sets: 3, reps: 8 },
+      { name: 'CROSS CABLE TRICEP EXTENSION', type: 'accessory', sets: 3, reps: 12 }
+    ],
+    'DAY 4': [
+      { name: '3sec PAUSED DEADLIFT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.77 },
+      { name: '3sec PAUSED DEADLIFT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.77 },
+      { name: 'CLOSE GRIP BENCH PRESS', type: 'SBD', sets: 1, reps: 6, pr_percent: 0.83 },
+      { name: 'CLOSE GRIP BENCH PRESS', type: 'SBD', sets: 2, reps: 6, pr_percent: 0.77 },
+      { name: 'WEIGHTED DIPS', type: 'accessory', sets: 1, reps: 7 },
+      { name: 'WEIGHTED DIPS', type: 'accessory', sets: 2, reps: 7 },
+      { name: 'SEATED LEG CURL', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'INCLINE DB PRESS', type: 'accessory', sets: 3, reps: 6 },
+      { name: 'DB BICEP CURL', type: 'accessory', sets: 3, reps: 10 }
+    ]
+  },
+  'WEEK 4': {
+    'DAY 1': [
+      { name: 'COMP SQUAT', type: 'SBD', sets: 1, reps: 2, pr_percent: 0.88 },
+      { name: 'COMP SQUAT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.83 },
+      { name: 'COMP SQUAT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.80 },
+      { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: 1, reps: 1, pr_percent: 0.85 },
+      { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: 1, reps: 3, pr_percent: 0.80 },
+      { name: 'TEMPO BENCH PRESS', type: 'SBD', sets: 2, reps: 3, pr_percent: 0.77 },
+      { name: 'FLAT DB PRESS', type: 'accessory', sets: 3, reps: 8 },
+      { name: 'SINGLE CABLE TRICEP EXTENSION', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'SHOULDER FLIES', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'PLANK', type: 'accessory', sets: 2, reps: 60, unit: 's' }
+    ],
+    'DAY 2': [
+      { name: 'COMP DEADLIFT', type: 'SBD', sets: 1, reps: 3, pr_percent: 0.88 },
+      { name: 'COMP DEADLIFT', type: 'SBD', sets: 1, reps: 3, pr_percent: 0.83 },
+      { name: 'COMP DEADLIFT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.80 },
+      { name: 'LERSEN BENCH PRESS', type: 'SBD', sets: 1, reps: 5, pr_percent: 0.85 },
+      { name: 'LERSEN BENCH PRESS', type: 'SBD', sets: 2, reps: 5, pr_percent: 0.80 },
+      { name: '45 DEGREES', type: 'accessory', sets: 3, reps: 8 },
+      { name: 'SEATED CABLE ROW', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'LAT PULL DOWN', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'DB BICEP CURL', type: 'accessory', sets: 3, reps: 10 }
+    ],
+    'DAY 3': [
+      { name: 'TEMPO SQUAT', type: 'SBD', sets: 1, reps: 3, pr_percent: 0.83 },
+      { name: 'TEMPO SQUAT', type: 'SBD', sets: 2, reps: 4, pr_percent: 0.80 },
+      { name: 'COMP BENCH PRESS', type: 'SBD', sets: 1, reps: 2, pr_percent: 0.88 },
+      { name: 'COMP BENCH PRESS', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.83 },
+      { name: 'COMP BENCH PRESS', type: 'SBD', sets: 2, reps: 5, pr_percent: 0.80 },
+      { name: 'LEG PRESS', type: 'accessory', sets: 3, reps: 8 },
+      { name: 'MACHINE SHOULDER PRESS', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'PULL UPS', type: 'accessory', sets: 3, reps: 8 },
+      { name: 'CROSS CABLE TRICEP EXTENSION', type: 'accessory', sets: 3, reps: 12 }
+    ],
+    'DAY 4': [
+      { name: '3sec PAUSED DEADLIFT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.83 },
+      { name: '3sec PAUSED DEADLIFT', type: 'SBD', sets: 1, reps: 4, pr_percent: 0.80 },
+      { name: 'CLOSE GRIP BENCH PRESS', type: 'SBD', sets: 1, reps: 6, pr_percent: 0.85 },
+      { name: 'CLOSE GRIP BENCH PRESS', type: 'SBD', sets: 2, reps: 6, pr_percent: 0.80 },
+      { name: 'WEIGHTED DIPS', type: 'accessory', sets: 1, reps: 7 },
+      { name: 'WEIGHTED DIPS', type: 'accessory', sets: 2, reps: 7 },
+      { name: 'SEATED LEG CURL', type: 'accessory', sets: 3, reps: 10 },
+      { name: 'INCLINE DB PRESS', type: 'accessory', sets: 3, reps: 6 },
+      { name: 'DB BICEP CURL', type: 'accessory', sets: 3, reps: 10 }
+    ]
+  }
+};
         function getPR(name) {
             const prs = JSON.parse(localStorage.getItem('userPRs')) || {};
             if (name.includes('SQUAT')) return prs.squat;
